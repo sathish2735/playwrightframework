@@ -1,0 +1,61 @@
+package io.sample.demo.qa.commons;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import io.sample.demo.qa.constants.WebPortalConstants;
+import io.sample.demo.qa.exceptions.WebPageException;
+import io.sample.demo.qa.locators.Locators;
+import io.sample.demo.qa.screenshotsmanager.ElementScreenshotStrategy;
+import io.sample.demo.qa.screenshotsmanager.ScreenshotContext;
+
+import java.util.Objects;
+
+public abstract class WebBasePage {
+
+    private static final String ELEMENT_SCREENSHOT_FILE_LOCATION = WebPortalConstants.SCREENSHOT_FILE_LOCATION + "/elements/"
+            + WebPortalConstants.BROWSER + "_" + WebPortalConstants.RUN_MODE + "_Element_";
+    protected Page basePage;
+    protected Locators locators;
+
+    protected WebBasePage(Page basePage) {
+        this.basePage = basePage;
+        this.locators = new Locators(basePage);
+    }
+
+    protected void validateAction(boolean condition, String errorMessage) {
+        if (!condition)
+            throw new WebPageException(errorMessage);
+    }
+
+    protected void validateNonEmptyText(String text, String errorMessage) {
+        if (text.isEmpty())
+            throw new WebPageException(errorMessage);
+    }
+
+    protected void clickElement(Locator locator) {
+        locator.click();
+    }
+
+    protected void fillText(Locator locator, String textContent) {
+        locator.clear();
+        locator.fill(textContent);
+    }
+
+    protected String getTextContent(String selector) {
+        return extractText(locators.getPageLocator(selector), "Text content is empty for the locator: " + selector);
+    }
+
+    protected String getTextContent(Locator locator) {
+        return extractText(locator, "Text content is empty for the locator: " + locator);
+    }
+
+    private String extractText(Locator locator, String errorMessage) {
+        Objects.requireNonNull(locator, errorMessage);
+        return locator.textContent().trim();
+    }
+
+    protected void takeElementScreenshot(Locator locator, String fileName) {
+        ScreenshotContext screenshotContext = new ScreenshotContext(new ElementScreenshotStrategy(locator));
+        screenshotContext.captureScreenshot(basePage, ELEMENT_SCREENSHOT_FILE_LOCATION + fileName + WebPortalConstants.IMAGE_FORMAT);
+    }
+}

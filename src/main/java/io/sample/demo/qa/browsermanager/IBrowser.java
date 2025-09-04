@@ -1,0 +1,9 @@
+package io.sample.demo.qa.browsermanager;
+
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Playwright;
+
+public interface IBrowser {
+
+    BrowserContext createSession(Playwright playwright, boolean isHeadless);
+}

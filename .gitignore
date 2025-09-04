@@ -188,3 +188,6 @@ screenshots/
 *.DS_Store
 logs/
 .fastRequest
+
+# Extent Reports
+extent-reports/

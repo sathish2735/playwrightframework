@@ -1,0 +1,56 @@
+package io.sample.demo.qa.pages;
+
+import com.microsoft.playwright.Page;
+import io.sample.demo.qa.constants.KeyboardEvents;
+import io.sample.demo.qa.constants.WebPortalConstants;
+
+public final class SwagLabsLoginPage extends SwagLabsBasePage {
+
+    public SwagLabsLoginPage(Page basePage) {
+        super(basePage);
+    }
+
+    public String getSwagLabsPageTitle() {
+        String pageTitle = basePage.title();
+        validateNonEmptyText(pageTitle, "Swag Labs Page Title is Empty!");
+        return pageTitle;
+    }
+
+    public String getSwagLabsLogoText() {
+        return getTextContent(locators.getByText("Swag Labs"));
+    }
+
+    public String getAcceptedUserNames() {
+        String acceptedUserNames = String.join("", locators.getPageLocator("#login_credentials").allTextContents());
+        validateNonEmptyText(acceptedUserNames, "Accepted User Name List is empty!");
+        return acceptedUserNames;
+    }
+
+    public String getAllUserPasswords() {
+        String allUserPasswords = String.join("", locators.getPageLocator(".login_password").allTextContents());
+        validateNonEmptyText(allUserPasswords, "All User Passwords is empty!");
+        return allUserPasswords;
+    }
+
+    public boolean isUserNameEntered(String userName) {
+        fillText(locators.getByPlaceholder("Username"), userName);
+        return true;
+    }
+
+    public boolean isPasswordEntered(String password) {
+        fillText(locators.getByPlaceholder("Password"), password);
+        return true;
+    }
+
+    public boolean isHomePageLanded() {
+        return getTextContent(".app_logo").equalsIgnoreCase("Swag Labs");
+    }
+
+    public boolean isLoginSuccess() {
+        validateAction(isUserNameEntered(WebPortalConstants.USERNAME), "User Name not entered!");
+        validateAction(isPasswordEntered(WebPortalConstants.PASSWORD), "Password not entered!");
+        locators.getByText("Login").press(KeyboardEvents.ENTER.getDescription());
+        validateAction(isHomePageLanded(), "Login Failed for the username: " + WebPortalConstants.USERNAME);
+        return true;
+    }
+}
