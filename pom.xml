@@ -84,8 +84,8 @@
                         <property>
                             <name>listener</name>
                             <value>
-                                io.decision.systems.tests.listeners.WebTestListeners,
-                                io.decision.systems.tests.listeners.WebAnnotationTransformer
+                                io.sample.demo.tests.listeners.WebTestListeners,
+                                io.sample.demo.tests.listeners.WebAnnotationTransformer
                             </value>
                         </property>
                     </properties>

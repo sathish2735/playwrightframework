@@ -33,7 +33,7 @@ public abstract class WebBaseTest {
         browserManager = new BrowserManager();
         log.info("Browser Manager has been initiated.");
         clearDirectory(System.getProperty("user.dir") + "/extent-reports");
-        clearDirectory(System.getProperty("user.dir") + "/src/test/resources/screenshots");
+//        clearDirectory(System.getProperty("user.dir") + "/src/test/resources/screenshots");
         log.info("Previous run report files has been cleared");
     }
 

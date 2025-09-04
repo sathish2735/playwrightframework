@@ -2,9 +2,7 @@ package io.sample.demo.qa.module;
 
 import com.microsoft.playwright.Page;
 import io.sample.demo.qa.constants.WebPortalConstants;
-import io.decision.systems.qa.pages.*;
 import io.sample.demo.qa.pages.*;
-import io.sample.tests.qa.pages.*;
 
 public class SwagLabsPortal {
 
